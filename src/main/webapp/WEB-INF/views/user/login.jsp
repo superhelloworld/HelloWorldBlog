@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -11,21 +11,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <title>Insert title here</title>
 
-<%-- <script type="text/javascript">
-// 切换验证码
- function change() {
 
-	document.getElementById("myimg").src = "/user/CreateCheckCode.action?"+ new Date().getTime();
-
-}</script> --%>
 </head>
 <body>
     <form action="./user/Login.action" method="post">
     	用户名<input type="text" name="username" /><br>
     	密码 <input type="password" name="password" /><br>
-    	<!--  验证码<input type="text" name="checkcode" />
-    	<img id="myimg"
-		src="/user/CreateCheckCode.action" style="cursor: pointer;" onclick="change();" /><br> -->
+    	验证码<input type="text" name="checkcode">${checkcode}<br>
     <input type="submit" value="登陆">
     </form>
 </body>
