@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <form action="./user/Login.action" method="post">
     	用户名<input type="text" name="username" /><br>
     	密码 <input type="password" name="password" /><br>
-    	验证码<input type="text" name="checkcode">${checkcode}<br>
+    	验证码<input type="text" name="checkcode">${checkCode}<br>
     <input type="submit" value="登陆">
     </form>
 </body>

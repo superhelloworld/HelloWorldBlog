@@ -20,7 +20,7 @@
     <title>首页</title>
 </head>
 <body>
-<h1>首页</h1> <c:if test="${not empty loginUser}">欢迎你${loginUser.nickname}</c:if>
+<h1>首页</h1> <c:if test="${not empty loginUser}">欢迎你:${loginUser.nickname}</c:if>
 <div style="border: solid 1px #000;width: 400px">
     <h3>分类浏览文章</h3>
     <c:forEach items="${requestScope.typeList}" var="at">
