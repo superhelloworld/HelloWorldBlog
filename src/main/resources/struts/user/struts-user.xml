@@ -38,6 +38,11 @@
            </result> 
         <result name="error">/WEB-INF/views/user/error.jsp</result>
         </action>
+        
+       <!--  <action name="cCode" class="com.helloworld.hwblog.user.util.CreateCheckCode">
+        <result name="SUCCESS">/WEB-INF/views/user/login.jsp</result>
+        <result type="redirect">/WEB-INF/views/user/login.jsp</result>
+        </action> -->
 
 <!--         <action name="CreateCheckCode" class="com.helloworld.hwblog.user.util.createImageAction" >
          <result name="success" type="stream">

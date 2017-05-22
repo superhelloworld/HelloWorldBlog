@@ -13,6 +13,7 @@ import com.helloworld.hwblog.user.dao.UserInfoDao;
 import com.helloworld.hwblog.user.entity.UserAccount;
 import com.helloworld.hwblog.user.entity.UserInfo;
 import com.helloworld.hwblog.user.model.LoginModel;
+import com.helloworld.hwblog.user.model.LoginTwoModel;
 import com.helloworld.hwblog.user.model.RegisteoneModel;
 import com.helloworld.hwblog.user.model.RegistetwoModel;
 import com.helloworld.hwblog.user.service.UserService;
@@ -77,7 +78,6 @@ public class UserSeviceImpl implements UserService {
 	public boolean regist2(RegistetwoModel resgite) {
 		// TODO Auto-generated method stub
 		//获取第一个model
-	
 		HttpServletRequest request= ServletActionContext.getRequest();
         request.getSession().getAttribute("reginfo");
         //把获得的session变为一个对象
@@ -93,13 +93,20 @@ public class UserSeviceImpl implements UserService {
 	public boolean login(LoginModel login) {
 		 // 传递用户名 和密码 到DAO
 		//return userdao.getUser(login.getUsername(),login.getPassword());
+		HttpServletRequest request= ServletActionContext.getRequest();
+		//转化为String类型
+        String cCode=(String)request.getSession().getAttribute("checkCode");
+        if(!cCode.equals(login.getCheckcode())) return false;
 		 UserAccount user=useraccoundao.getAcUser(login.getUsername(),login.getPassword());
-		 if(user!=null)
+		 if(user==null) return false;
+		 //从userInfo表里面查出来封装到LogintwoModel
+		 UserInfo userinfo=userinfodao.getInUser(login.getUsername());
+		 LoginTwoModel logintwomodel=new LoginTwoModel(userinfo.getUsername(),userinfo.getNickName(),userinfo.getIcon());
+		 //存入session中
+		 HttpServletRequest request2= ServletActionContext.getRequest();
+		 request2.getSession().setAttribute("loginUser", logintwomodel);
 		 return true;
-		 else {
-			return false;
-		}
-	       
+		        
 	}
 
 }
