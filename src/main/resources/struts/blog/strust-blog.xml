@@ -40,5 +40,17 @@
                 <param name="actionName">404-NotFound</param>
             </result>
         </action>
+        <action name="search" class="searchController" method="toPage">
+            <result>
+                /WEB-INF/views/blog/searchResult.jsp
+            </result>
+        </action>
+    </package>
+    <package name="blog-comment" namespace="/blog" extends="json-default">
+        <action name="addComment" class="commentController" method="addComment">
+            <result type="json">
+                <param name="root">"success"</param>
+            </result>
+        </action>
     </package>
 </struts>

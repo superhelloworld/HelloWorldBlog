@@ -12,11 +12,12 @@ public class PageModel<T> {
     private int allItemCount;
     private int itemsCount;
     private int index;
-
+    private int order;
+    private String keyWord;
     public PageModel() {
     }
 
-    public PageModel(String pageType, int itemsCount, int index) {
+    public PageModel(String pageType, int itemsCount, int index,int order) {
         this.pageType = pageType;
         this.itemsCount = itemsCount;
         this.index = index;
@@ -68,6 +69,22 @@ public class PageModel<T> {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
     }
 
     public int getAllPageCount(){

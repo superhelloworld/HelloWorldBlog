@@ -27,6 +27,7 @@ public class ArticlesController {
 
     private String type;
     private int index;
+    private int order;
     public void setArticleTypeService(ArticleTypeService articleTypeService) {
         this.articleTypeService = articleTypeService;
     }
@@ -47,12 +48,25 @@ public class ArticlesController {
         this.index = index;
     }
 
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
     public String toPage(){
         HttpServletRequest request= ServletActionContext.getRequest();
         request.setAttribute("typeList",articleTypeService.getArticleTypeList());
-        PageModel<ArticleItemModel> model=pageService.getPage(type,index,20);
+        PageModel<ArticleItemModel> model=pageService.getPage(type,index,20,order);
         if(model==null) return "error";
         request.setAttribute("pageModel",model);
+        return "success";
+    }
+
+    public String myArticles(){
+
         return "success";
     }
 }

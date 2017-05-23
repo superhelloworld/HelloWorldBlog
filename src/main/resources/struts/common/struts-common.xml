@@ -11,7 +11,7 @@
             <result>/WEB-INF/views/index.jsp</result>
         </action>
         <action name="404-NotFound" class="notFoundController" method="toPage">
-            <result >/html/404-page.html</result>
+            <result >/WEB-INF/views/common/error-404.jsp</result>
         </action>
     </package>
 </struts>

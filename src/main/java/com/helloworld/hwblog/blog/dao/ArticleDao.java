@@ -14,7 +14,16 @@ public interface ArticleDao {
     void deleteArticle(int id);
     List<Article> getArticleList(int first,int count);
     List<Article> getArticleListByType(int first,int count,int type);
+    List<Article> getArticleList_Hot(int first,int count);
+    List<Article> getArticleListByType_Hot(int first,int count,int type);
+    List<Article> getArticleListByOwner(int first,int count,String username);
+    List<Article> getArticleListByKeyWord(int first,int count,String keyWord);
+    List<Article> getArticleListByKeyWord(int first,int count,int type,String keyWord);
+    List<Article> getArticleListByKeyWord_Hot(int first,int count,String keyWord);
+    List<Article> getArticleListByKeyWord_Hot(int first,int count,int type,String keyWord);
     int getDataCount();
     int getDataCount(int type);
+    int getDataCount(String keyWord);
+    int getDataCount(int type,String keyWord);
     void addReadCount(int id);
 }

@@ -28,5 +28,42 @@
 作者：${requestScope.article.publisher}-${requestScope.article.original}<br>
 日期：${requestScope.article.date}    阅读量:${requestScope.article.readCount}<br>
 <p>${requestScope.article.content}</p>
+
+<h3>评论</h3>
+<c:forEach items="${requestScope.comments}" var="comment">
+    ${comment.commenter}:<br>
+    ${comment.date}<br>
+    <p>${comment.content}</p>
+</c:forEach>
+
+评论文章：
+<form>
+    <textarea cols="40" rows="10" id="content" name="content"></textarea>
+    <button type="button" id="commit">提交</button>
+</form>
+<script src="resources/js/jquery-3.1.0.min.js"></script>
+<script>
+    $("document").ready(function(){
+        $("#commit").click(function () {
+            var content=$("#content").val();
+            $.ajax({
+                type:"POST",
+                url:"blog/addComment",
+                data:{
+                    "content":content,
+                    "aid":${requestScope.aid}
+                },
+                dataType:"text",
+                success:function (data) {
+                    //alert(data);
+                    location.reload()
+                },
+                error:function () {
+                    alert("请求错误")
+                }
+            })
+        })
+    })
+</script>
 </body>
 </html>

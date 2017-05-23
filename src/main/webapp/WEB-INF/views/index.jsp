@@ -43,7 +43,6 @@
 </form>
 <br>
 <a href="./blog/test">Blog-Test</a>
-
 <a href="./user/test">UserTest</a>
 <script>
     function submitForm() {
@@ -52,6 +51,5 @@
         return true;
     }
 </script>
-
 </body>
 </html>

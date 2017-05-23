@@ -26,8 +26,8 @@
         <a href="<c:url value="${at.getUrl()}"/>">${at.typeName}</a>
     </c:forEach>
 </div>
-排序：
-<select name="order">
+<label for="order">排序：</label>
+<select name="order" id="order" onchange="change(this)">
     <option value="0">最新</option>
     <option value="1">热门</option>
 </select>
@@ -48,11 +48,22 @@
         </li>
     </c:forEach>
 </ul>
-<a href="./blog/articles.action?type=${requestScope.pageModel.pageType}&index=1">首页</a>
+<a href="./blog/articles.action?type=${requestScope.pageModel.pageType}&index=1&order=${requestScope.pageModel.order}">首页</a>
 <c:forEach begin="1" end="${requestScope.pageModel.getAllPageCount()}" step="1" var="i">
-    <a href="./blog/articles.action?type=${requestScope.pageModel.pageType}&index=${i}">${i}</a>
+    <a href="./blog/articles.action?type=${requestScope.pageModel.pageType}&index=${i}&order=${requestScope.pageModel.order}">${i}</a>
 </c:forEach>
-<a href="./blog/articles.action?type=${requestScope.pageModel.pageType}&index=${requestScope.pageModel.getAllPageCount()}">末页</a>
+<a href="./blog/articles.action?type=${requestScope.pageModel.pageType}&index=${requestScope.pageModel.getAllPageCount()}&order=${requestScope.pageModel.order}">末页</a>
 
 </body>
+<script>
+    window.onload=function () {
+        var orderNumber=${requestScope.pageModel.order};
+        var s=document.getElementById("order");
+        s[orderNumber].selected=true;
+    }
+    function change(s) {
+        var item=s.selectedIndex;
+        window.location.href="./blog/articles.action?type=${requestScope.pageModel.pageType}&index=${requestScope.pageModel.index}&order="+item;
+    }
+</script>
 </html>
