@@ -3,6 +3,7 @@ package com.helloworld.hwblog.blog.controller;
 import com.helloworld.hwblog.blog.model.NewArticleModel;
 import com.helloworld.hwblog.blog.service.ArticleService;
 import com.helloworld.hwblog.blog.service.ArticleTypeService;
+import com.helloworld.hwblog.user.model.LoginModel;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +39,14 @@ public class AddArticleController implements ModelDriven<NewArticleModel>{
     }
 
     public String toPage(){
+        if(ServletActionContext.getRequest().getSession().getAttribute("loginUser")==null) return "error";
         ServletActionContext.getRequest().setAttribute("typeList",articleTypeService.getArticleTypeList());
         return "success";
     }
 
     public String save(){
-        articleModel.setPublisher("xdzy");
+        LoginModel model= (LoginModel) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
+        articleModel.setPublisher(model.getUsername());
         articleService.addArticle(articleModel);
         return "success";
     }

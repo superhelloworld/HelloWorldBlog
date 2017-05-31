@@ -33,7 +33,7 @@
 <c:forEach items="${requestScope.comments}" var="comment">
     ${comment.commenter}:<br>
     ${comment.date}<br>
-    <p>${comment.content}</p>
+    <p style="color: #9b4449">${comment.content}</p>
 </c:forEach>
 
 评论文章：
@@ -55,8 +55,12 @@
                 },
                 dataType:"text",
                 success:function (data) {
-                    //alert(data);
-                    location.reload()
+                    var result=JSON.parse(data)
+                    if(result=="success"){
+                        location.reload()
+                    }else{
+                        location.href="./user/toLogin.action"
+                    }
                 },
                 error:function () {
                     alert("请求错误")

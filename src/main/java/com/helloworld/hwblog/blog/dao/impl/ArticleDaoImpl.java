@@ -33,12 +33,19 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public void updateArticle(Article article) {
-
+        Article temp=sessionFactory.getCurrentSession().get(Article.class,article.getId());
+        temp.setTags(article.getTags());
+        temp.setContent(article.getContent());
+        temp.setTitle(article.getTitle());
+        temp.setOriginal(article.getOriginal());
+        temp.setType(article.getType());
+        sessionFactory.getCurrentSession().update(temp);
     }
 
     @Override
     public void deleteArticle(int id) {
-
+        Article article=sessionFactory.getCurrentSession().get(Article.class,id);
+        sessionFactory.getCurrentSession().delete(article);
     }
 
     @Override
@@ -160,6 +167,14 @@ public class ArticleDaoImpl implements ArticleDao {
         Query<Long> query=sessionFactory.getCurrentSession().createQuery(hql,Long.class);
         query.setParameter("t",type);
         query.setParameter("k","%"+keyWord+"%");
+        return query.uniqueResult().intValue();
+    }
+
+    @Override
+    public int getDataCountByOwner(String owner) {
+        String hql="select count(*) from Article a where a.publisher=:o";
+        Query<Long> query=sessionFactory.getCurrentSession().createQuery(hql,Long.class);
+        query.setParameter("o",owner);
         return query.uniqueResult().intValue();
     }
 

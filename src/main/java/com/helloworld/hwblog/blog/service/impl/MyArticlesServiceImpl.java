@@ -3,9 +3,8 @@ package com.helloworld.hwblog.blog.service.impl;
 import com.helloworld.hwblog.blog.dao.ArticleDao;
 import com.helloworld.hwblog.blog.dao.ArticleTypeDao;
 import com.helloworld.hwblog.blog.entity.Article;
-import com.helloworld.hwblog.blog.entity.ArticleType;
 import com.helloworld.hwblog.blog.model.ArticleItemModel;
-import com.helloworld.hwblog.blog.service.PageService;
+import com.helloworld.hwblog.blog.service.MyArticlesService;
 import com.helloworld.hwblog.common.model.PageModel;
 import com.helloworld.hwblog.user.dao.UserInfoDao;
 import com.helloworld.hwblog.user.entity.UserInfo;
@@ -18,10 +17,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by xdzy on 17-5-13.
+ * Created by xdzy on 17-5-22.
  */
 @Service
-public class PageServiceImpl implements PageService{
+public class MyArticlesServiceImpl implements MyArticlesService{
     @Autowired
     private ArticleDao articleDao;
     @Autowired
@@ -41,26 +40,17 @@ public class PageServiceImpl implements PageService{
         this.articleTypeDao = articleTypeDao;
     }
 
+
     @Override
-    public PageModel<ArticleItemModel> getPage(String type, int index, int count,int order) {
+    public PageModel<ArticleItemModel> getArticles(int index, int count, String username) {
         PageModel<ArticleItemModel> page=new PageModel<>();
         page.setIndex(index);
         page.setItemsCount(count);
-        page.setPageType(type);
-        page.setOrder(order);
+        page.setPageName("我的文章");
         List<ArticleItemModel> list=new ArrayList<>();
         List<Article> articles=null;
-        if(type.equals("all")){
-            articles=order==0?articleDao.getArticleList((index-1)*count,count):articleDao.getArticleList_Hot((index-1)*count,count);
-            page.setAllItemCount(articleDao.getDataCount());
-            page.setPageName("全部");
-        }else{
-            ArticleType articleType=articleTypeDao.getArticleType(type);
-            if(articleType==null) return null;
-            articles=order==0?articleDao.getArticleListByType((index-1)*count,count,articleType.getId()):articleDao.getArticleListByType_Hot((index-1)*count,count,articleType.getId());
-            page.setPageName(articleType.getTypeName());
-            page.setAllItemCount(articleDao.getDataCount(articleType.getId()));
-        }
+        articles=articleDao.getArticleListByOwner((index-1)*count,count,username);
+        page.setAllItemCount(articleDao.getDataCountByOwner(username));
         for(Article a:articles){
             list.add(makeItem(a));
         }
@@ -77,9 +67,6 @@ public class PageServiceImpl implements PageService{
         articleItemModel.setTags(a.getTags());
         String content=a.getContent();
         articleItemModel.setDetail(makeDeatilContent(content));
-        UserInfo userInfo=userInfoDao.getInUser(a.getPublisher());
-        articleItemModel.setPublisher(userInfo.getNickName());
-        articleItemModel.setPubnisherIcon(userInfo.getIcon());
         return articleItemModel;
     }
 
@@ -88,8 +75,7 @@ public class PageServiceImpl implements PageService{
         Pattern p_html=Pattern.compile(regEx_html,Pattern.CASE_INSENSITIVE);
         Matcher m_html=p_html.matcher(content);
         String detail=m_html.replaceAll("");
-        if(detail.length()>100) return detail.substring(0,100);
+        if(detail.length()>105) return detail.substring(0,105);
         return detail.trim();
     }
-
 }

@@ -16,5 +16,6 @@
 <a href="<c:url value="/blog/addArticleType.action"/> ">添加文章类型</a>
 <a href="<c:url value="/blog/addArticle.action"/> ">添加文章</a><br>
 <a href="<c:url value="/blog/articles.action?type=Java&index=1"/> ">文章列表</a>
+<a href="<c:url value="/blog/myarticles.action?index=1"/> ">我的文章列表</a>
 </body>
 </html>

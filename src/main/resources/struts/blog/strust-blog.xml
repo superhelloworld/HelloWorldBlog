@@ -21,6 +21,10 @@
     <package name="blog-article" namespace="/blog" extends="struts-default">
         <action name="addArticle" class="addArticleController" method="toPage">
             <result>/WEB-INF/views/blog/addArticle.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="namespace">/user</param>
+                <param name="actionName">toLogin</param>
+            </result>
         </action>
         <action name="save" class="addArticleController" method="save">
             <result type="redirectAction">../home</result>
@@ -40,9 +44,29 @@
                 <param name="actionName">404-NotFound</param>
             </result>
         </action>
+        <action name="delete" class="articleController" method="delete">
+            <result type="redirectAction">
+                <param name="actionName">myarticles</param>
+            </result>
+        </action>
         <action name="search" class="searchController" method="toPage">
             <result>
                 /WEB-INF/views/blog/searchResult.jsp
+            </result>
+        </action>
+        <action name="myarticles" class="myArticleController" method="myArticle">
+            <result>/WEB-INF/views/blog/myarticles.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="namespace">/user</param>
+                <param name="actionName">toLogin</param>
+            </result>
+        </action>
+        <action name="updatePage" class="articleController" method="updatePage">
+            <result>/WEB-INF/views/blog/update.jsp</result>
+        </action>
+        <action name="update" class="articleController" method="update">
+            <result type="redirectAction">
+                <param name="actionName">myarticles</param>
             </result>
         </action>
     </package>
@@ -50,6 +74,9 @@
         <action name="addComment" class="commentController" method="addComment">
             <result type="json">
                 <param name="root">"success"</param>
+            </result>
+            <result name="error" type="json">
+                <param name="root">"error"</param>
             </result>
         </action>
     </package>

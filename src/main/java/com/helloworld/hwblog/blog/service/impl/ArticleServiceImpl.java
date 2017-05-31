@@ -6,7 +6,10 @@ import com.helloworld.hwblog.blog.entity.Article;
 import com.helloworld.hwblog.blog.entity.ArticleType;
 import com.helloworld.hwblog.blog.model.ArticleModel;
 import com.helloworld.hwblog.blog.model.NewArticleModel;
+import com.helloworld.hwblog.blog.model.UpdateModel;
 import com.helloworld.hwblog.blog.service.ArticleService;
+import com.helloworld.hwblog.user.dao.UserInfoDao;
+import com.helloworld.hwblog.user.entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,7 @@ public class ArticleServiceImpl implements ArticleService{
     private ArticleDao articleDao;
     @Autowired
     private ArticleTypeDao articleTypeDao;
+
 
     public void setArticleTypeDao(ArticleTypeDao articleTypeDao) {
         this.articleTypeDao = articleTypeDao;
@@ -49,12 +53,23 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public void deleteArticle(int id) {
-
+        articleDao.deleteArticle(id);
     }
 
     @Override
-    public void updateArticle(ArticleModel model) {
-
+    public void updateArticle(Article temp,UpdateModel model) {
+        temp.setType(model.getType());
+        temp.setOriginal(model.getOriginal());
+        temp.setTitle(model.getTitle());
+        temp.setContent(model.getContent());
+        temp.setTags(temp.getTags());
+        articleDao.updateArticle(temp);
     }
+
+    @Override
+    public Article getArticleTemp(int id) {
+        return articleDao.getArticle(id);
+    }
+
 
 }

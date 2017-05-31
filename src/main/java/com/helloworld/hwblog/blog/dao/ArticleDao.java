@@ -25,5 +25,6 @@ public interface ArticleDao {
     int getDataCount(int type);
     int getDataCount(String keyWord);
     int getDataCount(int type,String keyWord);
+    int getDataCountByOwner(String owner);
     void addReadCount(int id);
 }

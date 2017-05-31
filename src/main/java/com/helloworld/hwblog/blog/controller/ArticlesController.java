@@ -59,7 +59,7 @@ public class ArticlesController {
     public String toPage(){
         HttpServletRequest request= ServletActionContext.getRequest();
         request.setAttribute("typeList",articleTypeService.getArticleTypeList());
-        PageModel<ArticleItemModel> model=pageService.getPage(type,index,20,order);
+        PageModel<ArticleItemModel> model=pageService.getPage(type,index,10,order);
         if(model==null) return "error";
         request.setAttribute("pageModel",model);
         return "success";

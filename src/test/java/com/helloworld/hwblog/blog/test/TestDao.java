@@ -28,13 +28,10 @@ public class TestDao {
     private ArticleDao articleDao;
     @Autowired
     private CommentDao commentDao;
+    @Autowired
     @Test
     public void test1(){
-//        ArticleType articleType=new ArticleType("C++");
-//        articleTypeDao.addArticleType(articleType);
-//        ArticleType articleType=new ArticleType("Spring");
-//        articleType.setId(2);
-//        articleTypeDao.updateArticleType(articleType);
+
     }
 
     @Test
